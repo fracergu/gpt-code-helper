@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "version": "0.0.1",
+  "author": "Francisco Cerdán",
+  "name": "Gpt Code helper",
+  "description": "A ChatGPT extension to help with code prompts",
+  "content_scripts": [
+    {
+      "matches": ["https://chat.openai.com/*"],
+      "js": ["main.js"]
+    }
+  ],
+  "host_permissions": ["https://chat.openai.com/*"]
+}
