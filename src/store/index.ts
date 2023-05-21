@@ -1,34 +1,39 @@
+import { persist } from 'zustand/middleware'
 import { createStore } from 'zustand/vanilla'
 
-interface AppState {
-  minifyOnPaste: boolean
+interface ChekboxesState {
   disableEnter: boolean
-  inputTokens: number
-  setMinifyOnPaste: (minifyOnPaste: boolean) => void
+  minifyOnPaste: boolean
   setDisableEnter: (disableEnter: boolean) => void
+  setMinifyOnPaste: (minifyOnPaste: boolean) => void
+}
+
+export const checkboxesStore = createStore<ChekboxesState>()(
+  persist(
+    (set) => ({
+      disableEnter: false,
+      minifyOnPaste: true,
+      setDisableEnter: (disableEnter: boolean) => {
+        set({ disableEnter })
+      },
+      setMinifyOnPaste: (minifyOnPaste: boolean) => {
+        set({ minifyOnPaste })
+      },
+    }),
+    {
+      name: 'checkboxes',
+    },
+  ),
+)
+
+interface InputTokensState {
+  inputTokens: number
   setInputTokens: (inputTokens: number) => void
 }
 
-const store = createStore<AppState>((set) => ({
-  minifyOnPaste: localStorage.getItem('minifyOnPaste') === 'true',
-  disableEnter: localStorage.getItem('disableEnter') === 'true',
+export const inputTokensStore = createStore<InputTokensState>()((set) => ({
   inputTokens: 0,
-  setMinifyOnPaste: (minifyOnPaste: boolean) => {
-    set({ minifyOnPaste })
-  },
-  setDisableEnter: (disableEnter: boolean) => {
-    set({ disableEnter })
-  },
   setInputTokens: (inputTokens: number) => {
     set({ inputTokens })
   },
 }))
-
-const persistState = (state: AppState) => {
-  localStorage.setItem('minifyOnPaste', state.minifyOnPaste.toString())
-  localStorage.setItem('disableEnter', state.disableEnter.toString())
-}
-
-store.subscribe(persistState)
-
-export default store

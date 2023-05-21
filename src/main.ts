@@ -2,7 +2,7 @@ import { setupDragAndDrop } from '@modules/dragDrop'
 import { setupHandlers } from '@modules/handlers'
 import { setupUiControls } from '@modules/uiControls'
 
-window.addEventListener('load', () => {
+window.addEventListener('pageshow', () => {
   createObserver(() => {
     setupDragAndDrop()
     setupHandlers()

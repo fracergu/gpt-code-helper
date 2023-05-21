@@ -1,4 +1,4 @@
-import store from '@store'
+import { checkboxesStore, inputTokensStore } from '@store'
 import { minimizeCode } from '@utils/minifier'
 import { calculateTokens } from '@utils/tokenizer'
 
@@ -7,8 +7,10 @@ export const setupHandlers = () => {
 
   if (textarea === null) return
 
-  const { getState, subscribe, setState } = store
-  const { disableEnter, minifyOnPaste } = getState()
+  const { getState: checkboxesGetState, subscribe: checkboxesSubscribe } = checkboxesStore
+  const { disableEnter, minifyOnPaste } = checkboxesGetState()
+
+  const { setState: inputTokensSetState } = inputTokensStore
 
   const manageListeners = (type: string, flag: boolean, handler: (e: any) => void) => {
     if (flag) {
@@ -48,20 +50,16 @@ export const setupHandlers = () => {
   }
 
   manageListeners('keydown', disableEnter, enterHandler)
-
   manageListeners('paste', minifyOnPaste, pasteHandler)
 
-  subscribe(({ disableEnter }) => {
+  checkboxesSubscribe(({ disableEnter, minifyOnPaste }) => {
     manageListeners('keydown', disableEnter, enterHandler)
-  })
-
-  subscribe(({ minifyOnPaste }) => {
     manageListeners('paste', minifyOnPaste, pasteHandler)
   })
 
   const keyUpHandler = () => {
     const { value } = textarea
-    setState({ inputTokens: calculateTokens(value) })
+    inputTokensSetState({ inputTokens: calculateTokens(value) })
   }
 
   textarea.addEventListener('keyup', keyUpHandler)

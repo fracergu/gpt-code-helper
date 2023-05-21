@@ -1,4 +1,4 @@
-import store from '@store'
+import { inputTokensStore } from '@store'
 import { checkExtensionAndMinimize } from '@utils/minifier'
 import { calculateTokens } from '@utils/tokenizer'
 
@@ -7,7 +7,7 @@ export const setupDragAndDrop = () => {
   const form = document.getElementsByTagName('form')[0]
   const targetArea = form?.parentElement as HTMLDivElement
 
-  const { setState } = store
+  const { setState: inputTokensSetState } = inputTokensStore
 
   if (targetArea === null) return
 
@@ -71,7 +71,7 @@ export const setupDragAndDrop = () => {
         if (typeof e.target?.result === 'string') {
           const minifiedCode = checkExtensionAndMinimize(file.name, e.target.result)
           textArea.value += isFirstIteration ? minifiedCode : '\n' + minifiedCode
-          setState({ inputTokens: calculateTokens(textArea.value) })
+          inputTokensSetState({ inputTokens: calculateTokens(textArea.value) })
           isFirstIteration = false
         }
         if (i === files.length - 1) {

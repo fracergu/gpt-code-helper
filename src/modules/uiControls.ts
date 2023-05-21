@@ -1,8 +1,9 @@
-import store from '@store'
+import { checkboxesStore, inputTokensStore } from '@store'
 import { createElementWithStyles, generateCheckbox } from '@utils/uiCreator'
 
 export const setupUiControls = () => {
-  const { setState, getState, subscribe } = store
+  const { subscribe: inputTokensSubscribe } = inputTokensStore
+  const { setState: checkboxesSetState, getState: checkboxesGetState } = checkboxesStore
 
   const parentElement = document.querySelector('div.group.relative') as HTMLDivElement
   if (parentElement === null) {
@@ -36,7 +37,7 @@ export const setupUiControls = () => {
   tokenCounter.innerText = `Input tokens: 0`
   container.appendChild(tokenCounter)
 
-  subscribe(({ inputTokens }) => {
+  inputTokensSubscribe(({ inputTokens }) => {
     tokenCounter.innerText = `Input tokens: ${inputTokens}`
   })
 
@@ -49,17 +50,19 @@ export const setupUiControls = () => {
   }) as HTMLDivElement
   container.appendChild(checkboxContainer)
 
+  const { minifyOnPaste, disableEnter } = checkboxesGetState()
+
   checkboxContainer.appendChild(
-    generateCheckbox('minify-on-paste', 'Minify on paste', getState().minifyOnPaste, () => {
-      const minifyOnPaste = document.getElementById('minify-on-paste') as HTMLInputElement
-      setState({ minifyOnPaste: minifyOnPaste.checked })
+    generateCheckbox('minify-on-paste', 'Minify on paste', minifyOnPaste, () => {
+      const minifyOnPasteElement = document.getElementById('minify-on-paste') as HTMLInputElement
+      checkboxesSetState({ minifyOnPaste: minifyOnPasteElement.checked })
     }),
   )
 
   checkboxContainer.appendChild(
-    generateCheckbox('disable-enter', 'Disable Enter for sumbit', getState().disableEnter, () => {
-      const disableEnter = document.getElementById('disable-enter') as HTMLInputElement
-      setState({ disableEnter: disableEnter.checked })
+    generateCheckbox('disable-enter', 'Disable Enter for sumbit', disableEnter, () => {
+      const disableEnterElement = document.getElementById('disable-enter') as HTMLInputElement
+      checkboxesSetState({ disableEnter: disableEnterElement.checked })
     }),
   )
 }
