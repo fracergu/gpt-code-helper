@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "version": "0.0.3",
   "author": "Francisco Cerdán",
   "name": "GPT Code helper",
@@ -10,17 +10,11 @@
       "js": ["main.js"]
     }
   ],
-  "permissions": [],
-  "optional_permissions": ["https://chat.openai.com/*"],
+  "host_permissions": ["https://chat.openai.com/*"],
   "icons": {
     "16": "images/icon16.png",
     "32": "images/icon32.png",
     "48": "images/icon48.png",
     "128": "images/icon128.png"
-  },
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "{fefa5bcd-bdf9-4495-bc82-0fa326ae7651}"
-    }
   }
 }

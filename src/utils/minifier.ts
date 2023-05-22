@@ -25,8 +25,16 @@ export function checkExtensionAndMinimize(filename: string, code: string): strin
 }
 
 export function minimizeCode(code: string): string {
-  // Delete single line comments.
-  code = code.replace(/\/\/.*$/gm, '')
+  // Match strings and single-line comments.
+  const regex = /(".*?"|'.*?'|\/\/.*$)/gm
+
+  code = code.replace(regex, (match) => {
+    // Only replace comments, not strings.
+    if (match.startsWith('//')) {
+      return ''
+    }
+    return match
+  })
 
   // Delete multiline comments.
   code = code.replace(/\/\*[\s\S]*?\*\//gm, '')

@@ -4,10 +4,16 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "nodemon --exec npm run build --watch src --ext ts",
+    "dev": "nodemon --exec npm run build:chrome --watch src --ext ts",
+    "build:firefox": "npm-run-all -s copy:firefox build zip:firefox",
+    "build:chrome": "npm-run-all -s copy:chrome build zip:chrome",
+    "copy:firefox": "node scripts/build.cjs firefox",
+    "copy:chrome": "node scripts/build.cjs chrome",
     "build": "tsc && vite build",
+    "zip:firefox": "node scripts/zip.cjs firefox",
+    "zip:chrome": "node scripts/zip.cjs chrome",
     "lint": "eslint --ext .ts src/",
-    "format": "prettier --write \"src/**/*.ts\""
+    "format": "prettier --write \"src*.ts\""
   },
   "devDependencies": {
     "@types/node": "^20.2.1",
@@ -19,11 +25,14 @@
     "eslint-plugin-n": "^15.7.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
+    "fs-extra": "^11.1.1",
     "nodemon": "^2.0.22",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.8.8",
     "typescript": "^5.0.4",
     "vite": "^4.3.2",
-    "vite-tsconfig-paths": "^4.2.0"
+    "vite-tsconfig-paths": "^4.2.0",
+    "zip-a-folder": "^1.1.5"
   },
   "dependencies": {
     "gpt3-tokenizer": "^1.1.5",

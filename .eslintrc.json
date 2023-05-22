@@ -17,5 +17,5 @@
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error"
   },
-  "ignorePatterns": ["node_modules", "dist", "vite.config.ts"]
+  "ignorePatterns": ["node_modules", "dist", "vite.config.ts", "scripts"]
 }
