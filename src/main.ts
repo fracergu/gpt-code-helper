@@ -2,16 +2,6 @@ import { setupDragAndDrop } from '@modules/dragDrop'
 import { setupHandlers } from '@modules/handlers'
 import { setupUiControls } from '@modules/uiControls'
 
-window.addEventListener('pageshow', () => {
-  createObserver(() => {
-    setupDragAndDrop()
-    setupHandlers()
-  }, 'drag-drop-overlay')
-  createObserver(() => {
-    setupUiControls()
-  }, 'gpt-code-helper')
-})
-
 const createObserver = (callback: () => void, elementId: string) => {
   const observerOptions = { childList: true, subtree: true }
   const bodyNode = document.querySelector('body') as HTMLBodyElement
@@ -25,3 +15,11 @@ const createObserver = (callback: () => void, elementId: string) => {
   })
   observer.observe(bodyNode, observerOptions)
 }
+
+createObserver(() => {
+  setupDragAndDrop()
+  setupHandlers()
+}, 'drag-drop-overlay')
+createObserver(() => {
+  setupUiControls()
+}, 'gpt-code-helper')

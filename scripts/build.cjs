@@ -6,4 +6,4 @@ if (!['firefox', 'chrome'].includes(browser)) {
   process.exit(1)
 }
 
-fs.copySync(`manifests/manifest_${browser}.json`, 'public/manifest.json')
+fs.copySync(`manifests/manifest_${browser}.json`, 'dist/manifest.json')

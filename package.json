@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon --exec npm run build:chrome --watch src --ext ts",
-    "build:firefox": "npm-run-all -s copy:firefox build zip:firefox",
-    "build:chrome": "npm-run-all -s copy:chrome build zip:chrome",
+    "build:firefox": "npm-run-all -s build copy:firefox zip:firefox",
+    "build:chrome": "npm-run-all -s build copy:chrome zip:chrome",
     "copy:firefox": "node scripts/build.cjs firefox",
     "copy:chrome": "node scripts/build.cjs chrome",
     "build": "tsc && vite build",
