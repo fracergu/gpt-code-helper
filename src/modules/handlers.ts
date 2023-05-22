@@ -4,8 +4,10 @@ import { calculateTokens } from '@utils/tokenizer'
 
 export const setupHandlers = () => {
   const textarea = document.getElementById('prompt-textarea') as HTMLTextAreaElement
+  const form = document.getElementsByTagName('form')[0]
+  const sendbutton = form?.querySelector('button') as HTMLButtonElement
 
-  if (textarea === null) return
+  if (textarea === null || sendbutton === null) return
 
   const { getState: checkboxesGetState, subscribe: checkboxesSubscribe } = checkboxesStore
   const { disableEnter, minifyOnPaste } = checkboxesGetState()
@@ -48,6 +50,10 @@ export const setupHandlers = () => {
     const minifiedText = minimizeCode(text)
 
     insertAtCursor(textarea, minifiedText)
+
+    if (sendbutton.disabled) {
+      sendbutton.disabled = false
+    }
   }
 
   manageListeners('keydown', disableEnter, enterHandler)

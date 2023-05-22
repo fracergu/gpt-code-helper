@@ -6,10 +6,13 @@ export const setupDragAndDrop = () => {
   const textArea = document.getElementById('prompt-textarea') as HTMLTextAreaElement
   const form = document.getElementsByTagName('form')[0]
   const targetArea = form?.parentElement as HTMLDivElement
+  const sendbutton = form?.querySelector('button') as HTMLButtonElement
 
   const { setState: inputTokensSetState } = inputTokensStore
 
-  if (targetArea === null) return
+  if (targetArea === null || textArea === null || sendbutton === null) return
+
+  textArea.style.minHeight = '90px'
 
   const overlay = document.createElement('div')
   overlay.style.position = 'absolute'
@@ -81,7 +84,10 @@ export const setupDragAndDrop = () => {
       reader.readAsText(file)
     }
 
-    textArea.style.height = '1px'
+    if (sendbutton.disabled) {
+      sendbutton.disabled = false
+    }
+
     setTimeout(() => {
       textArea.scroll({
         top: textArea.scrollHeight,
