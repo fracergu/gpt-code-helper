@@ -24,7 +24,8 @@
     "paths": {
       "@modules/*": ["src/modules/*"],
       "@utils/*": ["src/utils/*"],
-      "@store": ["src/store/index.ts"]
+      "@store": ["src/store/index.ts"],
+      "@constants/*": ["src/constants/*"]
     }
   },
   "include": ["src"]

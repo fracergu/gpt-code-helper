@@ -1,3 +1,4 @@
+import allowedMimeTypes from '@constants/allowedMimeTypes'
 import { inputTokensStore } from '@store'
 import { checkExtensionAndMinimize } from '@utils/minifier'
 import { calculateTokens } from '@utils/tokenizer'
@@ -67,8 +68,30 @@ export const setupDragAndDrop = () => {
 
     let isFirstIteration = true
 
+    const ignoredFiles = []
+    const allowedFiles = []
+
     for (let i = 0; i < files.length; i++) {
       const file = files[i]
+      if (!file.type.startsWith('text/') && allowedMimeTypes.includes(file.type) === false) {
+        ignoredFiles.push(file.name)
+      } else {
+        allowedFiles.push(file.name)
+      }
+    }
+
+    if (ignoredFiles.length > 0) {
+      const ignoredFilesList = ignoredFiles.join('\n')
+      alert(`The following files will be ignored as they are not text files:\n${ignoredFilesList}`)
+    }
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i]
+
+      if (!file.type.startsWith('text/') && allowedMimeTypes.includes(file.type) === false) {
+        continue
+      }
+
       const reader = new FileReader()
       reader.onload = async (e) => {
         if (typeof e.target?.result === 'string') {
