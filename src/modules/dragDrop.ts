@@ -73,7 +73,7 @@ export const setupDragAndDrop = () => {
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i]
-      if (!file.type.startsWith('text/') && allowedMimeTypes.includes(file.type) === false) {
+      if (!file.type.startsWith('text/') && allowedMimeTypes.includes(file.type)) {
         ignoredFiles.push(file.name)
       } else {
         allowedFiles.push(file.name)
@@ -88,7 +88,7 @@ export const setupDragAndDrop = () => {
     for (let i = 0; i < files.length; i++) {
       const file = files[i]
 
-      if (!file.type.startsWith('text/') && allowedMimeTypes.includes(file.type) === false) {
+      if (!file.type.startsWith('text/') && allowedMimeTypes.includes(file.type)) {
         continue
       }
 
