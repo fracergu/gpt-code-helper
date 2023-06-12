@@ -60,7 +60,7 @@ export const setupUiControls = () => {
   )
 
   checkboxContainer.appendChild(
-    generateCheckbox('disable-enter', 'Disable Enter for sumbit', disableEnter, () => {
+    generateCheckbox('disable-enter', 'Disable Enter for submit', disableEnter, () => {
       const disableEnterElement = document.getElementById('disable-enter') as HTMLInputElement
       checkboxesSetState({ disableEnter: disableEnterElement.checked })
     }),

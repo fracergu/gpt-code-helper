@@ -68,30 +68,24 @@ export const setupDragAndDrop = () => {
 
     let isFirstIteration = true
 
-    const ignoredFiles = []
-    const allowedFiles = []
+    const ignoredFiles: File[] = []
+    const allowedFiles: File[] = []
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i]
-      if (!file.type.startsWith('text/') && allowedMimeTypes.includes(file.type)) {
-        ignoredFiles.push(file.name)
+      if (!file.type.startsWith('text/') && !allowedMimeTypes.includes(file.type)) {
+        ignoredFiles.push(file)
       } else {
-        allowedFiles.push(file.name)
+        allowedFiles.push(file)
       }
     }
 
     if (ignoredFiles.length > 0) {
-      const ignoredFilesList = ignoredFiles.join('\n')
+      const ignoredFilesList = ignoredFiles.map((file) => file.name).join('\n')
       alert(`The following files will be ignored as they are not text files:\n${ignoredFilesList}`)
     }
 
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i]
-
-      if (!file.type.startsWith('text/') && allowedMimeTypes.includes(file.type)) {
-        continue
-      }
-
+    for (const file of allowedFiles) {
       const reader = new FileReader()
       reader.onload = async (e) => {
         if (typeof e.target?.result === 'string') {
@@ -100,9 +94,7 @@ export const setupDragAndDrop = () => {
           inputTokensSetState({ inputTokens: calculateTokens(textArea.value) })
           isFirstIteration = false
         }
-        if (i === files.length - 1) {
-          textArea.value += '\n'
-        }
+        textArea.value += '\n'
       }
       reader.readAsText(file)
     }
